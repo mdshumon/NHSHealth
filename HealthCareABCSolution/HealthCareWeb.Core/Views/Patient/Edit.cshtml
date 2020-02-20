@@ -1,0 +1,40 @@
+﻿@model Workflow.DomainModels.Models.ViewModels.PatientVm
+@using Workflow.DomainModels
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h1>Edit Patient Details</h1>
+
+<div class="card">
+    <form asp-action="Edit" method="post">
+        <div class="card-body">
+            @Html.HiddenFor(model => model.PatientId)
+            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control col-sm-8" })
+            @Html.DisplayNameFor(model => model.LastName)
+            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control col-sm-8" })
+            @Html.DisplayNameFor(model => model.Gender)
+            <br />
+            <select class="form-control col-sm-4" asp-for="Gender" asp-items="Model.Genders">
+                <option class="form-control" selected="(@Model.Gender == (int)Enums.GenderTypes">Unknown</option>
+            </select>
+            @Html.DisplayNameFor(model => model.DOB)
+            @Html.EditorFor(model => model.DOB, new { @class = "form-control col-sm-8" })
+            <br />
+            @Html.DisplayNameFor(model => model.Address)
+            @Html.TextAreaFor(model => model.Address, new { @class = "form-control col-sm-8" })
+
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <button class="form-control col-sm-3 btn-primary" asp-action="Edit" >Update</button>
+                <a class="col-sm-4" asp-action="Index">Back to List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+

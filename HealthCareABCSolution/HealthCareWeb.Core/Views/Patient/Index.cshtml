@@ -1,0 +1,73 @@
+﻿
+@model IEnumerable<Workflow.DomainModels.Models.ViewModels.PatientVm>
+
+@{
+    ViewData["Title"] = "Patient";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Patient Details</h1>
+
+<div class="card">
+    <div class="card-body">
+
+        <p>
+            <a asp-action="Create">Add New Patient</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LastName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Gender)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DOB)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+              
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                @Html.Raw((@Workflow.DomainModels.Enums.GenderTypes)item.Gender)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DOB)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+
+                            <td>
+                                <a class="btn btn-link" asp-action="Edit" asp-route-id="@item.PatientId">Edit</a>
+                            </td>
+                            <td>
+                                <form asp-action="Delete" method="post">
+                                    <button class="btn btn-link" asp-action="Delete" asp-route-id="@item.PatientId"><span class="text-danger">Delete</span></button>
+                                </form>
+                            </td>
+                        </tr>
+                    }                
+            </tbody>
+        </table>
+
+    </div>
+</div>

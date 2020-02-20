@@ -1,0 +1,91 @@
+﻿@model IEnumerable< Workflow.DomainModels.Models.ViewModels.ServiceVm>
+
+@{
+    ViewData["Title"] = "Consultation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Patient Details</h1>
+
+<div class="card">
+    <div class="card-body">
+
+        <p>
+            <a asp-action="Create">Add New Consultation</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ServiceId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FullName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ServiceTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Symtoms)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Advice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Medication)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ServiceCharge)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Comments)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modell => item.ServiceId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modell => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modell => item.ServiceTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modell => item.Symtoms)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modell => item.Advice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modell => item.Medication)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modell => item.ServiceCharge)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modell => item.Comments)
+                    </td>
+
+                    <td>
+                        <a class="btn btn-link" asp-action="Edit" asp-route-id="@item.ServiceId">Edit</a>
+                    </td>
+                    <td>
+                        <form asp-action="Delete" method="post">
+                            <button class="btn btn-link" asp-action="Delete" asp-route-id="@item.ServiceId"><span class="text-danger">Delete</span></button>
+                        </form>
+                    </td>
+                </tr>
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+</div>

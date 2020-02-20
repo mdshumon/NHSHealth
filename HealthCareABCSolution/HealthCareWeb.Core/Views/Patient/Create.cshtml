@@ -1,0 +1,34 @@
+﻿@model Workflow.DomainModels.Models.ViewModels.PatientVm
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Add Patient Details</h2>
+<div class="card">
+    <form asp-action="Create" method="post">
+        <div class="card-body">
+            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control col-sm-8" })
+            @Html.DisplayNameFor(model => model.LastName)
+            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control col-sm-8" })
+            @Html.DisplayNameFor(model => model.Gender)
+            <br />
+            <select class="form-control col-sm-4" asp-for="Gender" asp-items="Model.Genders">
+                <option class="form-control" value="-1">Select Gender</option>
+            </select>
+
+            @Html.DisplayNameFor(model => model.DOB)
+            <input class="form-control col-sm-4" type="date" asp-for="DOB"  id="Model.DOB" value="2018-07-22" min="1900-01-01" max=@DateTime.Today.ToString()>            
+            @Html.DisplayNameFor(model => model.Address)
+            @Html.TextAreaFor(model => model.Address, new { @class = "form-control col-sm-8" })
+
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <button class="form-control col-sm-3 btn-primary" asp-action="Create">Add</button>
+                <a class="col-sm-4" asp-action="Index">Back to List</a>
+            </div>
+        </div>
+    </form>
+</div>
+

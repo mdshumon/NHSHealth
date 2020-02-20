@@ -1,0 +1,45 @@
+﻿@model Workflow.DomainModels.Models.ViewModels.ServiceVm
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Add Consultation Details</h2>
+<div class="card">
+    <form asp-action="Create" method="post">
+        <div class="card-body">
+
+            @Html.DisplayNameFor(model => model.PatientId)
+            @*@Html.DropDownListFor(model => model.PatientId, @ViewBag.PatientListItemsIds as IEnumerable<SelectListItem>, new { @class = "form-control col-sm-11" })*@
+            <select class="form-control col-sm-11" asp-for="PatientId" asp-items="@ViewBag.PatientListItemsIds as IEnumerable<SelectListItem>">
+            </select>
+            <br />
+            @Html.DisplayNameFor(model => model.ServiceTime)
+            <input class="form-control col-sm-4" type="datetime-local" asp-for="ServiceTime" asp-format="{0:dd/MM/yyyy}" id=Model.ServiceTime value=@DateTime.Now min="1900-01-01" max=@DateTime.Now>
+
+            @Html.DisplayNameFor(model => model.Symtoms)
+            @Html.TextAreaFor(model => model.Symtoms, new { @class = "form-control col-sm-8" })
+            @Html.DisplayNameFor(model => model.Advice)
+            @Html.TextAreaFor(model => model.Advice, new { @class = "form-control col-sm-8" })
+            @Html.DisplayNameFor(model => model.Medication)
+            @Html.TextAreaFor(model => model.Medication, new { @class = "form-control col-sm-8" })
+
+            @Html.DisplayNameFor(model => model.Comments)
+            @Html.TextAreaFor(model => model.Comments, new { @class = "form-control col-sm-8" })
+
+            @Html.DisplayNameFor(model => model.ServiceCharge)£
+            <br />
+            <select class="form-control col-sm-4" asp-for="ServiceCharge" asp-items="Model.ServiceChargeList">
+                <option class="form-control" value="0.00">Select Service Charge</option>
+            </select>
+
+
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <button class="form-control col-sm-3 btn-primary" asp-action="Create">Add</button>
+                <a class="col-sm-4" asp-action="Index">Back to List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
