@@ -21,7 +21,7 @@ namespace Workflow.DomainModels.Models.ViewModels
 
         [Required]
         [DataType(DataType.Date)]
-        [Display(Name = "Birth Date")]       
+        [Display(Name = "Birth Date")]
         public DateTime DOB { get; set; }
         [Required]
         public string Address { get; set; }
@@ -30,7 +30,7 @@ namespace Workflow.DomainModels.Models.ViewModels
         {
             new SelectListItem { Value = "1", Text = "Male" },
             new SelectListItem { Value = "2", Text = "Female" },
-            new SelectListItem { Value = "3", Text = "DontDisclose" }
+            new SelectListItem { Value = "3", Text = "DontDisclose", Selected=true }
         };
     }
 }

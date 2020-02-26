@@ -1,0 +1,100 @@
+﻿@model Workflow.DomainModels.Models.ViewModels.ReportVm
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h4>Choose  report type and Date</h4>
+</div>
+
+
+<div class="d-flex justify-content-center">
+    <button id="reportButton" class="form-control col-sm-4 btn-outline-warning" asp-action="Create">Display Reports</button>
+</div>
+<br />
+
+
+<br />
+<div class="row">
+    <div class="col-sm-2">
+
+        <label><input class="form-control" asp-for="ReporType" value="1" type="radio" name="reportOption" checked="checked">Daily=1</label>
+    </div>
+    <div class="col-sm-2">
+        <label><input class="form-control" asp-for="ReporType" value="2" type="radio" name="reportOption">Weekly=2</label>
+    </div>
+    <div class="col-sm-2">
+        <label><input class="form-control" asp-for="ReporType" value="3" type="radio" name="reportOption">Monthly=3</label>
+    </div>
+    <div class="col-sm-2">
+        <label><input class="form-control" asp-for="ReporType" value="4" type="radio" name="reportOption">Quarterly=4</label>
+    </div>
+    <div class="col-sm-1">
+        <label><input class="form-control" asp-for="ReporType" value="5" type="radio" name="reportOption">Yearly=5</label>
+    </div>
+    <div class="col-sm-3">
+        <label>Select Report Date</label>
+        <input class="form-control " type="date" asp-for="ServiceDate" id="ServiceDateID" value="@DateTime.Now.ToString("yyyy-MM-dd")" min="1900-01-01" max=@DateTime.Today>
+    </div>
+</div>
+<hr>
+
+<table class="table table-striped" id="reportTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalConsultations)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalAgeGroup)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalFee)
+            </th>
+            <th>
+               Type Selected 
+            </th>
+
+        </tr>
+    </thead>
+
+</table>
+<hr>
+<script>
+
+    //this is just demo purpose in real life i use datatable and many others
+    // also javascript file would come from file
+    $(document).ready(function () {
+
+        $('#reportButton').click(function () {
+            debugger
+            var radioValue = $("input[name='reportOption']:checked").val();
+            var reportSumDate = $("#ServiceDateID").val();
+            var selectedDate = null;
+            selectedDate = null;
+            $.ajax({
+                url: "/Report/Details",
+                type: "POST",
+                data: { reportDate: reportSumDate, reporttype: radioValue },
+                cache: false,
+                async: true,
+                success: function (data) {
+                    var tr;    
+                    for (var i = 0; i < data.length; i++) {
+                        tr = $('<tr/>');
+                        tr.append("<td>" + data[i].totalConsultations + "</td>");
+                        tr.append("<td >" + data[i].totalAgeGroup + "</td>");
+                        tr.append("<td>" + data[i].totalFee + "</td>");
+
+                        // make selection type for tracking purpose only
+                        tr.append("<td>" + radioValue +">> " + reportSumDate + "</td>");
+
+                        $('#reportTable').append(tr);
+
+                    }
+                }
+            });
+        });
+    });
+</script>

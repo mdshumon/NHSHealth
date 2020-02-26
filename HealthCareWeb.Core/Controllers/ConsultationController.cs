@@ -29,19 +29,12 @@ namespace HealthCareWeb.Core.Controllers
             if (model == null)
                 return NotFound();
             return View(model);
-        }
+        }      
 
-        // GET: Consultation/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Consultation/Create
+        
         public ActionResult Create()
         {
             var model = new ServiceVm();
-            ViewBag.PatientListItemsIds= iServiceBL.GetAllPatientNameId();
             model.PatientListItems = iServiceBL.GetAllPatientNameId();
             return View(model);
         }
@@ -50,19 +43,36 @@ namespace HealthCareWeb.Core.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(ServiceVm servicevm)
         {
-            if (string.IsNullOrEmpty(servicevm.Advice))
+            if (!ModelState.IsValid)
                 return View();
-            iServiceBL.AddService(servicevm);
-            return RedirectToAction(nameof(Index));
-        }
 
-        // GET: Consultation/Edit/5
-        public ActionResult Edit(Guid serviceId)
+            if (string.IsNullOrEmpty(servicevm.Advice))
+                    return View();
+                iServiceBL.AddService(servicevm);
+                return RedirectToAction(nameof(Index));
+                    }
+
+        [HttpGet]
+        public async Task<ActionResult> Edit(Guid id)
         {
-            return View();
+            if (string.IsNullOrEmpty(Convert.ToString(id)))
+                return View();
+            var model = await iServiceBL.GetServiceByID(id);
+
+            return View(model);
         }
 
-      
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(ServiceVm serviceVm)
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(serviceVm.ServiceId)))
+                return View();
+            var model = await iServiceBL.UpdateServiceAsync(serviceVm);
+            return RedirectToAction("Index");
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)

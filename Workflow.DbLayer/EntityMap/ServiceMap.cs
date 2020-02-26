@@ -13,6 +13,8 @@ namespace Workflow.DbLayer.EntityMap
         public void Configure(EntityTypeBuilder<Service> builder)
         {
             builder.ToTable("tblServices", "NHS");
+            builder.HasKey(x=>x.ServiceId);
+            builder.HasOne(x => x.Patient).WithMany(s => s.Services);
         }
     }
 }

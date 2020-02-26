@@ -13,6 +13,7 @@ namespace Workflow.DbLayer.EntityMap
         public void Configure(EntityTypeBuilder<Patient> builder)
         {
             builder.ToTable("tblPatient","NHS");
+            builder.HasKey(x=>x.PatientId);
         }
     }
 }

@@ -8,28 +8,34 @@
     <form asp-action="Create" method="post">
         <div class="card-body">
 
-            @Html.DisplayNameFor(model => model.PatientId)
-            @*@Html.DropDownListFor(model => model.PatientId, @ViewBag.PatientListItemsIds as IEnumerable<SelectListItem>, new { @class = "form-control col-sm-11" })*@
-            <select class="form-control col-sm-11" asp-for="PatientId" asp-items="@ViewBag.PatientListItemsIds as IEnumerable<SelectListItem>">
+            @Html.DisplayNameFor(model => model.PatientId)            
+            <select class="form-control col-sm-11" asp-for="PatientId" asp-items="@Model.PatientListItems as IEnumerable<SelectListItem>">
             </select>
             <br />
-            @Html.DisplayNameFor(model => model.ServiceTime)
-            <input class="form-control col-sm-4" type="datetime-local" asp-for="ServiceTime" asp-format="{0:dd/MM/yyyy}" id=Model.ServiceTime value=@DateTime.Now min="1900-01-01" max=@DateTime.Now>
-
             @Html.DisplayNameFor(model => model.Symtoms)
             @Html.TextAreaFor(model => model.Symtoms, new { @class = "form-control col-sm-8" })
+            <span asp-validation-for="@Model.Symtoms" class="text-danger"></span>
+            <br />
+
             @Html.DisplayNameFor(model => model.Advice)
             @Html.TextAreaFor(model => model.Advice, new { @class = "form-control col-sm-8" })
+            <span asp-validation-for="@Model.Advice" class="text-danger"></span>
+            <br />
+
             @Html.DisplayNameFor(model => model.Medication)
             @Html.TextAreaFor(model => model.Medication, new { @class = "form-control col-sm-8" })
+            <span asp-validation-for="@Model.Medication" class="text-danger"></span>
+            <br />
 
             @Html.DisplayNameFor(model => model.Comments)
             @Html.TextAreaFor(model => model.Comments, new { @class = "form-control col-sm-8" })
+            <span asp-validation-for="@Model.Comments" class="text-danger"></span>
+            <br />
+
 
             @Html.DisplayNameFor(model => model.ServiceCharge)£
             <br />
-            <select class="form-control col-sm-4" asp-for="ServiceCharge" asp-items="Model.ServiceChargeList">
-                <option class="form-control" value="0.00">Select Service Charge</option>
+            <select class="form-control col-sm-4" asp-for="ServiceCharge" asp-items="Model.ServiceChargeList">                
             </select>
 
 

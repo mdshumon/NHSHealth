@@ -28,7 +28,7 @@ namespace HealthCareWeb.Core
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<HealthCareDbContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("HealthCareDbContext"))
+               options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("HealthCareDbContext"))
             );
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
             //register di

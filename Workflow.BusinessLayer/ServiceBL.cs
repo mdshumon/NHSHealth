@@ -24,7 +24,9 @@ namespace Workflow.BusinessLayer
         }
         public IEnumerable<ServiceVm> GetAllServices()
         {
-            return iRepository.HealthCareDbContext.Services.Select(x => new ServiceVm()
+            
+
+           var  model= iRepository.HealthCareDbContext.Services.Select(x => new ServiceVm()
             {
                 ServiceId = x.ServiceId,
                 Advice = x.Advice,
@@ -37,12 +39,13 @@ namespace Workflow.BusinessLayer
                 ServiceCharge = x.ServiceCharge,
                 PatientListItem = new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem() { Text = x.Patient.FirstName + " " + x.Patient.LastName + "(" + x.PatientId + ")", Value = x.PatientId.ToString() }
             });
+            return model;
         }
 
         public async Task<ServiceVm> GetServiceByID(Guid serviceID)
         {
-            var services = await iRepository.HealthCareDbContext.Services.FirstOrDefaultAsync(x => x.PatientId == serviceID);
-            return new ServiceVm()
+            var services = await iRepository.HealthCareDbContext.Services.FirstOrDefaultAsync(x => x.ServiceId == serviceID);
+            var model= new ServiceVm()
             {
                 ServiceId = services.ServiceId,
                 Advice = services.Advice,
@@ -52,9 +55,11 @@ namespace Workflow.BusinessLayer
                 PatientId = services.PatientId,
                 ServiceTime = services.ServiceTime,
                 Symtoms = services.Symtoms,
-                ServiceCharge = services.ServiceCharge,
+                ServiceCharge = services.ServiceCharge,                 
                 PatientListItem = new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem() { Text = services.Patient.FirstName + " " + services.Patient.LastName + "(" + services.PatientId + ")", Value = services.PatientId.ToString() }
             };
+
+            return model;
         }
 
         public void AddService(ServiceVm servicevm)
@@ -69,7 +74,7 @@ namespace Workflow.BusinessLayer
                     Medication = servicevm.Medication,
                     PatientId = servicevm.PatientId,
                     ServiceCharge = servicevm.ServiceCharge,
-                    ServiceTime = servicevm.ServiceTime,
+                    ServiceTime = DateTime.Now,
                     Symtoms = servicevm.Symtoms
                 });
                 iRepository.HealthCareDbContext.SaveChanges();
@@ -96,9 +101,8 @@ namespace Workflow.BusinessLayer
                 service.Medication = servicevm.Medication;
                 service.PatientId = servicevm.PatientId;
                 service.ServiceCharge = servicevm.ServiceCharge;
-                service.ServiceTime = servicevm.ServiceTime;
-                service.Symtoms = servicevm.Symtoms;
-
+                service.ServiceTime = DateTime.Now;
+                service.Symtoms = servicevm.Symtoms;                
                 await iRepository.HealthCareDbContext.SaveChangesAsync();
                 return true;
             }

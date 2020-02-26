@@ -1,0 +1,52 @@
+﻿@model Workflow.DomainModels.Models.ViewModels.ServiceVm
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Update Consultation Details</h2>
+<div class="card">
+    <form asp-action="Create" method="post">
+        <div class="card-body">
+
+            @Html.DisplayNameFor(model => model.ServiceId)
+            @Html.TextBoxFor(model => model.ServiceId, new { @class = "form-control col-sm-8", @readonly = "readonly" })
+            @Html.DisplayNameFor(model => model.FullName)
+            @Html.TextBoxFor(model => model.FullName, new { @class = "form-control col-sm-8", @readonly = "readonly" })
+            @Html.HiddenFor(model => model.PatientId)
+
+            @Html.DisplayNameFor(model => model.Symtoms)
+            @Html.TextAreaFor(model => model.Symtoms, new { @class = "form-control col-sm-8" })
+            <span asp-validation-for="@Model.Symtoms" class="text-danger"></span>
+            <br />
+
+            @Html.DisplayNameFor(model => model.Advice)
+            @Html.TextAreaFor(model => model.Advice, new { @class = "form-control col-sm-8" })
+            <span asp-validation-for="@Model.Advice" class="text-danger"></span>
+            <br />
+
+            @Html.DisplayNameFor(model => model.Medication)
+            @Html.TextAreaFor(model => model.Medication, new { @class = "form-control col-sm-8" })
+            <span asp-validation-for="@Model.Medication" class="text-danger"></span>
+            <br />
+
+
+            @Html.DisplayNameFor(model => model.Comments)
+            @Html.TextAreaFor(model => model.Comments, new { @class = "form-control col-sm-8" })
+            <span asp-validation-for="@Model.Comments" class="text-danger"></span>
+            <br />
+
+            @Html.DisplayNameFor(model => model.ServiceCharge)£
+            <br />
+            <select class="form-control col-sm-4" asp-for="@Model.ServiceCharge" asp-items="Model.ServiceChargeList">
+            </select>
+
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <button class="form-control col-sm-3 btn-primary" asp-action="Edit">Update</button>
+                <a class="col-sm-4" asp-action="Index">Back to List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
